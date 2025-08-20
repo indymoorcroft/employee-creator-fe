@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import { getAllEmployees } from "../apiCalls";
 import type { Employee } from "../types/Employee";
 import EmployeeCard from "./EmployeeCard";
@@ -24,7 +26,7 @@ const EmployeeList = () => {
   }, []);
 
   if (isLoading) {
-    return <p>Loading comments</p>;
+    return <p>Loading employees</p>;
   }
 
   if (isError) {
@@ -35,9 +37,16 @@ const EmployeeList = () => {
     <>
       <section>
         <h2>Employees</h2>
+        <Link to={"/employees/new"}>Add Employee</Link>
         <ul>
           {employees.map((employee) => {
-            return <EmployeeCard key={employee.id} employee={employee} />;
+            return (
+              <EmployeeCard
+                key={employee.id}
+                employee={employee}
+                setEmployees={setEmployees}
+              />
+            );
           })}
         </ul>
       </section>
