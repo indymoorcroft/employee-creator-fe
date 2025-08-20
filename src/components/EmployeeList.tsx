@@ -7,15 +7,15 @@ import EmployeeCard from "./EmployeeCard";
 
 const EmployeeList = () => {
   const [employees, setEmployees] = useState<Employee[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState<Boolean>(true);
+  const [isError, setIsError] = useState<Boolean>(false);
 
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const employeeData = await getAllEmployees();
+        const employeesData = await getAllEmployees();
         setIsLoading(false);
-        setEmployees(employeeData);
+        setEmployees(employeesData);
       } catch (error) {
         setIsError(true);
         setIsLoading(false);

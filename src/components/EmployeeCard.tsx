@@ -9,7 +9,7 @@ interface Props {
 }
 
 const EmployeeCard = ({ employee, setEmployees }: Props) => {
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [isDeleting, setIsDeleting] = useState<Boolean>(false);
   const [error, setError] = useState<Error | null>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -25,7 +25,6 @@ const EmployeeCard = ({ employee, setEmployees }: Props) => {
         });
         setIsDeleting(false);
       } catch (err) {
-        setIsDeleting(false);
         if (err instanceof Error) {
           setError(err);
         } else {
@@ -38,25 +37,31 @@ const EmployeeCard = ({ employee, setEmployees }: Props) => {
   };
 
   if (isDeleting) {
-    return <p>deleting comment...</p>;
+    return <p>deleting employee...</p>;
   }
 
   return (
     <div>
-      <p>
-        {employee.firstName} {employee.lastName}
-      </p>
-      <p>{employee.email}</p>
-      <p>{employee.mobileNumber}</p>
-      <Link to={`/employees/${employee.id}`}>View</Link>
-      <div></div>
-      <button
-        name={employee.id.toString()}
-        onClick={handleClick}
-        disabled={isDeleting}
-      >
-        Remove
-      </button>
+      {error ? (
+        <p>There was an error</p> // Add Error Component
+      ) : (
+        <li>
+          <p>
+            {employee.firstName} {employee.lastName}
+          </p>
+          <p>Email: {employee.email}</p>
+          <p>Mobile Number: {employee.mobileNumber}</p>
+          <Link to={`/employees/${employee.id}`}>View</Link>
+          <div></div>
+          <button
+            name={employee.id.toString()}
+            onClick={handleClick}
+            disabled={isDeleting}
+          >
+            Remove
+          </button>
+        </li>
+      )}
     </div>
   );
 };

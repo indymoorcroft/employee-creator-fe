@@ -10,6 +10,13 @@ export const getAllEmployees = async (): Promise<Employee[]> => {
   return data;
 };
 
+export const getEmployeeById = async (
+  id: string | undefined
+): Promise<Employee> => {
+  const { data } = await employeeApi.get(`/employees/${id}`);
+  return data;
+};
+
 export const deleteEmployeeById = async (id: string) => {
   await employeeApi.delete(`/employees/${id}`);
 };
