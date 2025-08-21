@@ -44,7 +44,7 @@ const EmployeePage = () => {
       ) : (
         <>
           <Header title={employee?.firstName + " " + employee?.lastName} />
-          <section>
+          <section className="flex items-center justify-center mt-6">
             <EmployeeDetails employee={employee} setEmployee={setEmployee} />
           </section>
           <section>

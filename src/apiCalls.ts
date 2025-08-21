@@ -25,6 +25,14 @@ export const getContractsById = async (
   return data;
 };
 
+export const updateEmployee = async (
+  id: number,
+  updatedEmployee: Employee
+): Promise<Employee> => {
+  const { data } = await employeeApi.patch(`/employees/${id}`, updatedEmployee);
+  return data;
+};
+
 export const deleteEmployeeById = async (id: string) => {
   await employeeApi.delete(`/employees/${id}`);
 };
