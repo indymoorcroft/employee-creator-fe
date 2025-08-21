@@ -1,24 +1,28 @@
 import { useEffect, useState } from "react";
 import type { Employee } from "../types/Employee";
 import { useParams } from "react-router-dom";
-import { getEmployeeById } from "../apiCalls";
+import { getContractsById, getEmployeeById } from "../apiCalls";
 import Header from "./Header";
 import EmployeeDetails from "./EmployeeDetails";
-import EmployeeContractList from "./EmployeeContractList";
+import type { Contract } from "../types/Contract";
+import EmployeeContractCard from "./EmployeeContractCard";
 
 const EmployeePage = () => {
-  const [employee, setEmployee] = useState<Employee>();
+  const [employee, setEmployee] = useState<Employee | null>(null);
+  const [contracts, setContracts] = useState<Contract[]>([]);
   const [isLoading, setIsLoading] = useState<Boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
   const { id } = useParams();
 
   useEffect(() => {
-    const fetchEmployeeById = async () => {
+    const fetchEmployeeAndContractsById = async () => {
       try {
         setIsLoading(true);
         const employeeData = await getEmployeeById(id);
+        const contractData = await getContractsById(id);
         setEmployee(employeeData);
+        setContracts(contractData);
       } catch (err) {
         setError(err instanceof Error ? err : new Error("Unknown error"));
       } finally {
@@ -26,7 +30,7 @@ const EmployeePage = () => {
       }
     };
 
-    fetchEmployeeById();
+    fetchEmployeeAndContractsById();
   }, []);
 
   if (isLoading) {
@@ -40,8 +44,20 @@ const EmployeePage = () => {
       ) : (
         <>
           <Header title={employee?.firstName + " " + employee?.lastName} />
-          <EmployeeDetails />
-          <EmployeeContractList />
+          <section>
+            <EmployeeDetails employee={employee} setEmployee={setEmployee} />
+          </section>
+          <section>
+            {contracts.map((contract) => {
+              return (
+                <EmployeeContractCard
+                  key={contract.id}
+                  contract={contract}
+                  setContracts={setContracts}
+                />
+              );
+            })}
+          </section>
         </>
       )}
     </div>
