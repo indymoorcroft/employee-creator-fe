@@ -5,35 +5,27 @@ import { deleteEmployeeById } from "../apiCalls";
 
 interface Props {
   employee: Employee;
-  setEmployees: any;
+  setEmployees: React.Dispatch<React.SetStateAction<Employee[]>>;
 }
 
 const EmployeeCard = ({ employee, setEmployees }: Props) => {
   const [isDeleting, setIsDeleting] = useState<Boolean>(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const { name } = event.currentTarget;
-    const deleteEmployee = async () => {
-      try {
-        setIsDeleting(true);
-        await deleteEmployeeById(name);
-        setEmployees((currEmployees: Employee[]) => {
-          return currEmployees.filter((employee) => {
-            return employee.id !== +name;
-          });
-        });
-        setIsDeleting(false);
-      } catch (err) {
-        if (err instanceof Error) {
-          setError(err);
-        } else {
-          setError(new Error("Unknown error"));
-        }
-      }
-    };
-
-    deleteEmployee();
+  const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    const id = event.currentTarget.name;
+    try {
+      setIsDeleting(true);
+      await deleteEmployeeById(id);
+      setEmployees((currEmployees) =>
+        currEmployees.filter((employee) => employee.id !== +id)
+      );
+      setIsDeleting(false);
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error("Unknown error"));
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   if (isDeleting) {

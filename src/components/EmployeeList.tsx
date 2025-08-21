@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { getAllEmployees } from "../apiCalls";
 import type { Employee } from "../types/Employee";
 import EmployeeCard from "./EmployeeCard";
+import Header from "./Header";
 
 const EmployeeList = () => {
   const [employees, setEmployees] = useState<Employee[]>([]);
@@ -36,7 +37,7 @@ const EmployeeList = () => {
   return (
     <>
       <section>
-        <h2>Employees</h2>
+        <Header title="All Employees" />
         <Link to={"/employees/new"}>Add Employee</Link>
         <ul>
           {employees.map((employee) => {
