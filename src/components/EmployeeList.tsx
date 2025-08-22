@@ -1,24 +1,25 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
-import { getAllEmployees } from "../apiCalls";
-import type { Employee } from "../types/Employee";
+import { createEmployee, getAllEmployees } from "../apiCalls";
+import type { Employee, EmployeeInput } from "../types/Employee";
 import EmployeeCard from "./EmployeeCard";
 import Header from "./Header";
+import EmployeeForm from "./EmployeeForm";
 
 const EmployeeList = () => {
   const [employees, setEmployees] = useState<Employee[]>([]);
+  const [isAdding, setIsAdding] = useState<Boolean>(false);
   const [isLoading, setIsLoading] = useState<Boolean>(true);
-  const [isError, setIsError] = useState<Boolean>(false);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
         const employeesData = await getAllEmployees();
-        setIsLoading(false);
         setEmployees(employeesData);
-      } catch (error) {
-        setIsError(true);
+      } catch (err) {
+        setError(err instanceof Error ? err : new Error("Unknown error"));
+      } finally {
         setIsLoading(false);
       }
     };
@@ -26,31 +27,59 @@ const EmployeeList = () => {
     fetchEmployees();
   }, []);
 
+  const handleClick = () => {
+    setIsAdding(!isAdding);
+  };
+
+  const handleAdd = async (employee: EmployeeInput) => {
+    try {
+      const newEmployee = await createEmployee(employee);
+      setEmployees((currEmployees) => [newEmployee, ...currEmployees]);
+      setIsAdding(false);
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error("Unknown error"));
+    }
+  };
+
   if (isLoading) {
     return <p>Loading employees</p>;
   }
 
-  if (isError) {
+  if (error) {
     return <p>Employees could not be loaded</p>;
   }
 
   return (
     <>
-      <section>
-        <Header title="All Employees" />
-        <Link to={"/employees/new"}>Add Employee</Link>
-        <ul>
-          {employees.map((employee) => {
-            return (
-              <EmployeeCard
-                key={employee.id}
-                employee={employee}
-                setEmployees={setEmployees}
-              />
-            );
-          })}
+      <Header title="All Employees" />
+      <div className="w-[95vw] max-w-[950px] mx-auto flex flex-col items-center">
+        <div className="w-full flex justify-end my-3">
+          {isAdding ? (
+            <EmployeeForm
+              onSubmit={handleAdd}
+              submitText="Add"
+              isShowing={setIsAdding}
+            />
+          ) : (
+            <button
+              onClick={handleClick}
+              className="px-4 py-2 text-white text-sm font-medium rounded bg-green-600 hover:bg-green-700"
+            >
+              Add Employee
+            </button>
+          )}
+        </div>
+
+        <ul className="flex flex-col items-center w-full">
+          {employees.map((employee) => (
+            <EmployeeCard
+              key={employee.id}
+              employee={employee}
+              setEmployees={setEmployees}
+            />
+          ))}
         </ul>
-      </section>
+      </div>
     </>
   );
 };

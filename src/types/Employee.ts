@@ -8,3 +8,5 @@ export type Employee = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type EmployeeInput = Omit<Employee, "id" | "createdAt" | "updatedAt">;
