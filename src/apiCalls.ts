@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Employee } from "./types/Employee";
+import type { Employee, EmployeeInput } from "./types/Employee";
 import type { Contract } from "./types/Contract";
 
 const employeeApi = axios.create({
@@ -25,9 +25,16 @@ export const getContractsById = async (
   return data;
 };
 
+export const createEmployee = async (
+  employee: EmployeeInput
+): Promise<Employee> => {
+  const { data } = await employeeApi.post("/employees", employee);
+  return data;
+};
+
 export const updateEmployee = async (
   id: number,
-  updatedEmployee: Employee
+  updatedEmployee: EmployeeInput
 ): Promise<Employee> => {
   const { data } = await employeeApi.patch(`/employees/${id}`, updatedEmployee);
   return data;
