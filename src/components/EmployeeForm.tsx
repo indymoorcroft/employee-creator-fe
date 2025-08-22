@@ -43,8 +43,13 @@ const EmployeeForm = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-4 p-6 border rounded-lg shadow-md bg-white"
+      className="space-y-4 p-6 border border-gray-400 rounded-lg shadow-md bg-white w-[95vw] max-w-[950px]"
     >
+      <p className="text-md italic text-gray-500">
+        {submitText === "Add"
+          ? "Fill in the form to add a new employee:"
+          : `Updating ${initialValues?.firstName} ${initialValues?.lastName}:`}
+      </p>
       {["firstName", "lastName", "email", "mobileNumber", "address"].map(
         (field) => (
           <div key={field}>

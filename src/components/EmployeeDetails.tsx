@@ -21,7 +21,7 @@ const EmployeeDetails = ({ employee, setEmployee }: Props) => {
   };
 
   return (
-    <div className="p-6 border border-gray-400 rounded-lg shadow-md w-[95vw] bg-white">
+    <div>
       {isEditing ? (
         <div className="space-y-4">
           <EmployeeForm
@@ -32,7 +32,7 @@ const EmployeeDetails = ({ employee, setEmployee }: Props) => {
           />
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-4 p-6 border border-gray-400 rounded-lg shadow-md w-[95vw] max-w-[950px] bg-white">
           {["firstName", "lastName", "email", "mobileNumber", "address"].map(
             (field) => (
               <div key={field}>

@@ -51,31 +51,35 @@ const EmployeeList = () => {
 
   return (
     <>
-      <section>
-        <Header title="All Employees" />
-        {isAdding ? (
-          <EmployeeForm
-            onSubmit={handleAdd}
-            submitText="Add"
-            isShowing={setIsAdding}
-          />
-        ) : (
-          <>
-            <button onClick={handleClick}>Add Employee</button>
-          </>
-        )}
-        <ul>
-          {employees.map((employee) => {
-            return (
-              <EmployeeCard
-                key={employee.id}
-                employee={employee}
-                setEmployees={setEmployees}
-              />
-            );
-          })}
+      <Header title="All Employees" />
+      <div className="w-[95vw] max-w-[950px] mx-auto flex flex-col items-center">
+        <div className="w-full flex justify-end my-3">
+          {isAdding ? (
+            <EmployeeForm
+              onSubmit={handleAdd}
+              submitText="Add"
+              isShowing={setIsAdding}
+            />
+          ) : (
+            <button
+              onClick={handleClick}
+              className="px-4 py-2 text-white text-sm font-medium rounded bg-green-600 hover:bg-green-700"
+            >
+              Add Employee
+            </button>
+          )}
+        </div>
+
+        <ul className="flex flex-col items-center w-full">
+          {employees.map((employee) => (
+            <EmployeeCard
+              key={employee.id}
+              employee={employee}
+              setEmployees={setEmployees}
+            />
+          ))}
         </ul>
-      </section>
+      </div>
     </>
   );
 };

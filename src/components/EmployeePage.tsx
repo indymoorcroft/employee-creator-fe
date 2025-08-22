@@ -43,21 +43,26 @@ const EmployeePage = () => {
         <p>There was an error</p> // Add Error Component
       ) : (
         <>
-          <Header title={employee?.firstName + " " + employee?.lastName} />
+          <Header
+            title={employee?.firstName + " " + employee?.lastName}
+            backButton={true}
+          />
           <section className="flex items-center justify-center mt-6">
             <EmployeeDetails employee={employee} setEmployee={setEmployee} />
           </section>
-          <section>
-            {contracts.map((contract) => {
-              return (
-                <EmployeeContractCard
-                  key={contract.id}
-                  contract={contract}
-                  setContracts={setContracts}
-                />
-              );
-            })}
-          </section>
+          {contracts.length > 0 ? (
+            <section>
+              {contracts.map((contract) => {
+                return (
+                  <EmployeeContractCard
+                    key={contract.id}
+                    contract={contract}
+                    setContracts={setContracts}
+                  />
+                );
+              })}
+            </section>
+          ) : null}
         </>
       )}
     </div>
