@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import { getAllEmployees } from "../apiCalls";
 import type { Employee } from "../types/Employee";
 import EmployeeCard from "./EmployeeCard";
+import Header from "./Header";
 
 const EmployeeList = () => {
   const [employees, setEmployees] = useState<Employee[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState<Boolean>(true);
+  const [isError, setIsError] = useState<Boolean>(false);
 
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const employeeData = await getAllEmployees();
+        const employeesData = await getAllEmployees();
         setIsLoading(false);
-        setEmployees(employeeData);
+        setEmployees(employeesData);
       } catch (error) {
         setIsError(true);
         setIsLoading(false);
@@ -24,7 +27,7 @@ const EmployeeList = () => {
   }, []);
 
   if (isLoading) {
-    return <p>Loading comments</p>;
+    return <p>Loading employees</p>;
   }
 
   if (isError) {
@@ -34,10 +37,17 @@ const EmployeeList = () => {
   return (
     <>
       <section>
-        <h2>Employees</h2>
+        <Header title="All Employees" />
+        <Link to={"/employees/new"}>Add Employee</Link>
         <ul>
           {employees.map((employee) => {
-            return <EmployeeCard key={employee.id} employee={employee} />;
+            return (
+              <EmployeeCard
+                key={employee.id}
+                employee={employee}
+                setEmployees={setEmployees}
+              />
+            );
           })}
         </ul>
       </section>
