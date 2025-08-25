@@ -10,7 +10,7 @@ const EmployeeList = () => {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [isAdding, setIsAdding] = useState<Boolean>(false);
   const [isLoading, setIsLoading] = useState<Boolean>(true);
-  const [error, setError] = useState<Error | null>(null);
+  const [fetchError, setFetchError] = useState<Error | null>(null);
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -18,7 +18,7 @@ const EmployeeList = () => {
         const employeesData = await getAllEmployees();
         setEmployees(employeesData);
       } catch (err) {
-        setError(err instanceof Error ? err : new Error("Unknown error"));
+        setFetchError(err instanceof Error ? err : new Error("Unknown error"));
       } finally {
         setIsLoading(false);
       }
@@ -32,20 +32,16 @@ const EmployeeList = () => {
   };
 
   const handleAdd = async (employee: EmployeeInput) => {
-    try {
-      const newEmployee = await createEmployee(employee);
-      setEmployees((currEmployees) => [newEmployee, ...currEmployees]);
-      setIsAdding(false);
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error("Unknown error"));
-    }
+    const newEmployee = await createEmployee(employee);
+    setEmployees((currEmployees) => [newEmployee, ...currEmployees]);
+    setIsAdding(false);
   };
 
   if (isLoading) {
     return <p>Loading employees</p>;
   }
 
-  if (error) {
+  if (fetchError) {
     return <p>Employees could not be loaded</p>;
   }
 
@@ -69,7 +65,6 @@ const EmployeeList = () => {
             </button>
           )}
         </div>
-
         <ul className="flex flex-col items-center w-full">
           {employees.map((employee) => (
             <EmployeeCard
