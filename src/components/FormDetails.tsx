@@ -1,12 +1,14 @@
 interface Props<T extends Record<string, any>> {
   info: T | null;
   fields: (keyof T)[];
+  onClick?: () => void;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const FormDetails = <T extends Record<string, any>>({
   info,
   fields,
+  onClick,
   setIsEditing,
 }: Props<T>) => {
   if (!info) return <p>No details available</p>;
@@ -34,6 +36,14 @@ const FormDetails = <T extends Record<string, any>>({
         >
           Edit
         </button>
+        {onClick && (
+          <button
+            onClick={onClick}
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+          >
+            Delete
+          </button>
+        )}
       </div>
     </div>
   );

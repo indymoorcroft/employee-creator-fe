@@ -60,6 +60,10 @@ export const updateEmployee = async (
   }
 };
 
-export const deleteEmployeeById = async (id: string) => {
+export const deleteEmployee = async (id: string) => {
   await employeeApi.delete(`/employees/${id}`);
+};
+
+export const deleteContract = async (id: number) => {
+  await employeeApi.delete(`/contracts/${id}`);
 };
