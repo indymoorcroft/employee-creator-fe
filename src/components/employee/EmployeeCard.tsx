@@ -1,7 +1,7 @@
 import { useState } from "react";
-import type { Employee } from "../types/Employee";
+import type { Employee } from "../../types/Employee";
 import { Link } from "react-router-dom";
-import { deleteEmployeeById } from "../apiCalls";
+import { deleteEmployeeById } from "../../apiCalls";
 
 interface Props {
   employee: Employee;

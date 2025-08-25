@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import type { Employee } from "../types/Employee";
+import type { Employee } from "../../types/Employee";
 import { useParams } from "react-router-dom";
-import { getContractsById, getEmployeeById } from "../apiCalls";
-import Header from "./Header";
+import { getContractsById, getEmployeeById } from "../../apiCalls";
+import Header from "../Header";
 import EmployeeDetails from "./EmployeeDetails";
-import type { Contract } from "../types/Contract";
-import EmployeeContractCard from "./EmployeeContractCard";
+import type { Contract } from "../../types/Contract";
+import ContractCard from "../contract/ContractCard";
 
 const EmployeePage = () => {
   const [employee, setEmployee] = useState<Employee | null>(null);
@@ -48,21 +48,35 @@ const EmployeePage = () => {
             backButton={true}
           />
           <section className="flex items-center justify-center mt-6">
-            <EmployeeDetails employee={employee} setEmployee={setEmployee} />
+            <div>
+              <h2 className="text-xl font-semibold border-b-2 border-gray-300 pb-1 mb-4 w-[50vw] max-w-[300px]">
+                Personal details:
+              </h2>
+              <EmployeeDetails employee={employee} setEmployee={setEmployee} />
+            </div>
           </section>
-          {contracts.length > 0 ? (
-            <section>
-              {contracts.map((contract) => {
-                return (
-                  <EmployeeContractCard
-                    key={contract.id}
-                    contract={contract}
-                    setContracts={setContracts}
-                  />
-                );
-              })}
-            </section>
-          ) : null}
+          <section className="flex items-center justify-center mt-6">
+            <div>
+              <h2 className="text-xl font-semibold border-b-2 border-gray-300 pb-1 mb-4 w-[50vw] max-w-[300px]">
+                Contract details:
+              </h2>
+              {contracts.length > 0 ? (
+                <div>
+                  {contracts.map((contract) => {
+                    return (
+                      <ContractCard
+                        key={contract.id}
+                        contract={contract}
+                        setContracts={setContracts}
+                      />
+                    );
+                  })}
+                </div>
+              ) : (
+                <p>No contracts found</p>
+              )}
+            </div>
+          </section>
         </>
       )}
     </div>
