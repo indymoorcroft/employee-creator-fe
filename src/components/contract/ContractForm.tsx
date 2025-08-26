@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import type { Contract, ContractInput } from "../../types/Contract";
+import type { ContractInput } from "../../types/Contract";
 
 interface Props {
   initialValues?: ContractInput;

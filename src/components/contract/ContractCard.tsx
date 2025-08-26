@@ -1,8 +1,8 @@
 import { useState } from "react";
-import type { Contract } from "../../types/Contract";
+import type { Contract, ContractInput } from "../../types/Contract";
 import ContractForm from "./ContractForm";
 import FormDetails from "../FormDetails";
-import { deleteContract } from "../../apiCalls";
+import { deleteContract, updateContract } from "../../apiCalls";
 
 interface Props {
   contract: Contract;
@@ -28,10 +28,23 @@ const ContractCard = ({ contract, setContracts }: Props) => {
     }
   };
 
+  const handleUpdate = async (updatedContract: ContractInput) => {
+    const newContract = await updateContract(contract.id, updatedContract);
+    setContracts((currContracts) =>
+      currContracts.map((c) => (c.id === newContract.id ? newContract : c))
+    );
+    setIsEditingContract(false);
+  };
+
   return (
-    <div>
+    <div className="my-1">
       {isEditingContract ? (
-        <ContractForm initialValues={contract} />
+        <ContractForm
+          initialValues={contract}
+          onSubmit={handleUpdate}
+          submitText="Update"
+          isShowing={setIsEditingContract}
+        />
       ) : (
         <>
           <FormDetails

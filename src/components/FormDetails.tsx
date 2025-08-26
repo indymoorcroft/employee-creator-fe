@@ -25,7 +25,7 @@ const FormDetails = <T extends Record<string, any>>({
             {String(key).replace(/([A-Z])/g, " $1")}
           </p>
           <p className="w-full border border-gray-400 p-2 rounded min-h-[40px] bg-gray-50">
-            {String(info[key])}
+            {info[key] === undefined ? "" : String(info[key])}
           </p>
         </div>
       ))}

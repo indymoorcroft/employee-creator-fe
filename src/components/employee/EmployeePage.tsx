@@ -45,7 +45,7 @@ const EmployeePage = () => {
 
   const handleAdd = async (contract: ContractInput) => {
     if (id) {
-      const newContract = await createContract(+id, contract);
+      const newContract = await createContract(id, contract);
       setContracts((currContracts) => [newContract, ...currContracts]);
       setIsAdding(false);
     }
