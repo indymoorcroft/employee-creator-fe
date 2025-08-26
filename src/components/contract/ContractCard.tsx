@@ -14,8 +14,6 @@ const ContractCard = ({ contract, setContracts }: Props) => {
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const handleUpdate = async (updated: Contract) => {};
-
   const handleDelete = async () => {
     try {
       setIsDeleting(true);
@@ -33,7 +31,7 @@ const ContractCard = ({ contract, setContracts }: Props) => {
   return (
     <div>
       {isEditingContract ? (
-        <ContractForm />
+        <ContractForm initialValues={contract} />
       ) : (
         <>
           <FormDetails

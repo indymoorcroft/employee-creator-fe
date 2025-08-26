@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { Employee, EmployeeInput } from "./types/Employee";
-import type { Contract } from "./types/Contract";
+import type { Contract, ContractInput } from "./types/Contract";
 import { createErrorMessage } from "./utils";
 
 const employeeApi = axios.create({
@@ -56,6 +56,22 @@ export const updateEmployee = async (
       throw new Error(createErrorMessage(err.response.data.validation_errors));
     } else {
       throw new Error("Unknown error updating employee");
+    }
+  }
+};
+
+export const createContract = async (id: number, contract: ContractInput) => {
+  try {
+    const { data } = await employeeApi.post(
+      `/employees/${id}/contracts`,
+      contract
+    );
+    return data;
+  } catch (err: any) {
+    if (err.response && err.response.data) {
+      throw new Error(createErrorMessage(err.response.data.validation_errors));
+    } else {
+      throw new Error("Unknown error creating contract");
     }
   }
 };
