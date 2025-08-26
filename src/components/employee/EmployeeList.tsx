@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 
-import { createEmployee, getAllEmployees } from "../apiCalls";
-import type { Employee, EmployeeInput } from "../types/Employee";
+import { createEmployee, getAllEmployees } from "../../apiCalls";
+import type { Employee, EmployeeInput } from "../../types/Employee";
 import EmployeeCard from "./EmployeeCard";
-import Header from "./Header";
+import Header from "../Header";
 import EmployeeForm from "./EmployeeForm";
 
 const EmployeeList = () => {
   const [employees, setEmployees] = useState<Employee[]>([]);
-  const [isAdding, setIsAdding] = useState<Boolean>(false);
-  const [isLoading, setIsLoading] = useState<Boolean>(true);
+  const [isAdding, setIsAdding] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [fetchError, setFetchError] = useState<Error | null>(null);
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import type { Employee } from "../types/Employee";
+import type { Employee } from "../../types/Employee";
 import { Link } from "react-router-dom";
-import { deleteEmployeeById } from "../apiCalls";
+import { deleteEmployee } from "../../apiCalls";
 
 interface Props {
   employee: Employee;
@@ -16,11 +16,10 @@ const EmployeeCard = ({ employee, setEmployees }: Props) => {
     const id = event.currentTarget.name;
     try {
       setIsDeleting(true);
-      await deleteEmployeeById(id);
+      await deleteEmployee(id);
       setEmployees((currEmployees) =>
         currEmployees.filter((employee) => employee.id !== +id)
       );
-      setIsDeleting(false);
     } catch (err) {
       setError(err instanceof Error ? err : new Error("Unknown error"));
     } finally {

@@ -1,7 +1,7 @@
-import EmployeeList from "./components/EmployeeList";
+import EmployeeList from "./components/employee/EmployeeList";
 import { Route, Routes } from "react-router-dom";
 import "./global.css";
-import EmployeePage from "./components/EmployeePage";
+import EmployeePage from "./components/employee/EmployeePage";
 
 const App = () => {
   return (

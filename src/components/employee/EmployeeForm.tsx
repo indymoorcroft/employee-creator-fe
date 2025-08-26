@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import type { Employee, EmployeeInput } from "../types/Employee";
+import type { Employee, EmployeeInput } from "../../types/Employee";
 
 interface Props {
   initialValues?: Employee;
   onSubmit: (employee: Employee | EmployeeInput) => void;
   submitText?: string;
-  isShowing: React.Dispatch<React.SetStateAction<Boolean>>;
+  isShowing: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EmployeeForm = ({

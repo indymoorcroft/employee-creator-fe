@@ -9,3 +9,11 @@ export type Contract = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type ContractInput = {
+  startDate: string;
+  endDate: string | null;
+  contractType: string;
+  employmentType: string;
+  hoursPerWeek: number;
+};
