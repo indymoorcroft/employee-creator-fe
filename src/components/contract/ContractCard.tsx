@@ -38,6 +38,7 @@ const ContractCard = ({ contract, setContracts }: Props) => {
 
   return (
     <div className="my-1">
+      {error && <p>{error.message}</p>}
       {isEditingContract ? (
         <ContractForm
           initialValues={contract}

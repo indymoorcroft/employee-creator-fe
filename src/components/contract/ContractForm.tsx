@@ -81,6 +81,7 @@ const ContractForm = ({
           <DatePicker
             className="w-full border p-2 rounded min-h-[40px]"
             selected={formData.startDate}
+            name="startDate"
             onChange={(date: Date | null) =>
               setFormData((prev) => ({
                 ...prev,
@@ -96,6 +97,7 @@ const ContractForm = ({
           <DatePicker
             className="w-full border p-2 rounded min-h-[40px]"
             selected={formData.endDate}
+            name="endDate"
             onChange={(date: Date | null) =>
               setFormData((prev) => ({
                 ...prev,
